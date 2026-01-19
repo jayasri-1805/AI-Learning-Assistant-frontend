@@ -8,16 +8,15 @@ const login = async (email, password) => {
       password,
     });
     console.log("LOGIN RESPONSE FULL:", JSON.stringify(response.data, null, 2));
-    const token = response.data.token;
-    localStorage.setItem("token", token);
 
-    if (!token) {
-      throw new Error("Token not received from server");
+    // The structure based on authController is response.data[success, data[user, token], message]
+    // So we need to return response.data.data which contains {user, token}
+
+    if (!response.data.data || !response.data.data.token) {
+      throw new Error("Token or user data not received from server");
     }
 
-    localStorage.setItem("token", token);
-
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw error.response?.data || { message: "An unknown error occurred" };
   }
