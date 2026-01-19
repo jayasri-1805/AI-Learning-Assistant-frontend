@@ -17,7 +17,10 @@ const AIActions = () => {
   const handleGenerateSummary = async () => {
     setLoadingAction("summary");
     try {
-      const { summary } = await aiService.generateSummary(documentId);
+      const response = await aiService.generateSummary(documentId);
+      const summary = response.data?.summary;
+      if (!summary) throw new Error("No summary received");
+
       setModalTitle("Generated Summary");
       setModalContent(summary);
       setIsModalOpen(true);
@@ -36,10 +39,10 @@ const AIActions = () => {
     }
     setLoadingAction("explain");
     try {
-      const { explanation } = await aiService.explainConcept(
-        documentId,
-        concept,
-      );
+      const response = await aiService.explainConcept(documentId, concept);
+      const explanation = response.data?.explanation;
+      if (!explanation) throw new Error("No explanation received");
+
       setModalTitle(`Explanation of "${concept}"`);
       setModalContent(explanation);
       setIsModalOpen(true);
