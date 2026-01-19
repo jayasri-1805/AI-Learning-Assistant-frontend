@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import documentService from '../../services/documentService';
-import Spinner from '../../components/common/Spinner';
-import toast from 'react-hot-toast';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import PageHeader from '../../components/common/PageHeader';
-import Tabs from '../../components/common/Tabs';
-
-
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import documentService from "../../services/documentService";
+import Spinner from "../../components/common/Spinner";
+import toast from "react-hot-toast";
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import PageHeader from "../../components/common/PageHeader";
+import Tabs from "../../components/common/Tabs";
+import ChatInterface from "../../components/chat/ChatInterface";
+import AIActions from "../../components/ai/AIActions";
+import FlashcardManager from "../../components/flashcards/FlashcardManager";
+import QuizManager from "../../components/quizzes/QuizManager";
 
 const DocumentDetailPage = () => {
-
   const { id } = useParams();
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('content');
+  const [activeTab, setActiveTab] = useState("content");
 
   useEffect(() => {
     const fetchDocumentDetails = async () => {
@@ -22,7 +23,7 @@ const DocumentDetailPage = () => {
         const data = await documentService.getDocumentById(id);
         setDocument(data);
       } catch (error) {
-        toast.error('Failed to fetch document details.');
+        toast.error("Failed to fetch document details.");
         console.error(error);
       } finally {
         setLoading(false);
@@ -32,18 +33,18 @@ const DocumentDetailPage = () => {
     fetchDocumentDetails();
   }, [id]);
 
-
   const getPdfUrl = () => {
     if (!document?.data?.filePath) return null;
 
     const filePath = document.data.filePath;
 
-    if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+    if (filePath.startsWith("http://") || filePath.startsWith("https://")) {
       return filePath;
     }
 
-    const baseUrl = import.meta.env.VITE_REACT_APP_API_URL || 'http://localhost:8000';
-    return `${baseUrl}${filePath.startsWith('/') ? '' : '/'}${filePath}`;
+    const baseUrl =
+      import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:8000";
+    return `${baseUrl}${filePath.startsWith("/") ? "" : "/"}${filePath}`;
   };
 
   const renderContent = () => {
@@ -59,7 +60,9 @@ const DocumentDetailPage = () => {
     return (
       <div className="bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm">
         <div className="flex items-center justify-between p-4 bg-gray-50 border-b border-gray-300">
-          <span className="text-sm font-medium text-gray-700">Document Viewer</span>
+          <span className="text-sm font-medium text-gray-700">
+            Document Viewer
+          </span>
           <a
             href={pdfUrl}
             target="_blank"
@@ -77,7 +80,7 @@ const DocumentDetailPage = () => {
             title="PDF Viewer"
             frameBorder="0"
             style={{
-              colorScheme: 'light',
+              colorScheme: "light",
             }}
           />
         </div>
@@ -86,7 +89,7 @@ const DocumentDetailPage = () => {
   };
 
   const renderChat = () => {
-    return <ChatInterface />
+    return <ChatInterface />;
   };
 
   const renderAIActions = () => {
@@ -102,11 +105,11 @@ const DocumentDetailPage = () => {
   };
 
   const tabs = [
-    { name: 'Content', label: 'Content', content: renderContent() },
-    { name: 'Chat', label: 'Chat', content: renderChat() },
-    { name: 'AI Actions', label: 'AI Actions', content: renderAIActions() },
-    { name: 'Flashcards', label: 'Flashcards', content: renderFlashcardsTab() },
-    { name: 'Quizzes', label: 'Quizzes', content: renderQuizzesTab() },
+    { name: "Content", label: "Content", content: renderContent() },
+    { name: "Chat", label: "Chat", content: renderChat() },
+    { name: "AI Actions", label: "AI Actions", content: renderAIActions() },
+    { name: "Flashcards", label: "Flashcards", content: renderFlashcardsTab() },
+    { name: "Quizzes", label: "Quizzes", content: renderQuizzesTab() },
   ];
 
   if (loading) {
@@ -120,7 +123,10 @@ const DocumentDetailPage = () => {
   return (
     <div>
       <div className="mb-4">
-        <Link to="/documents" className="imline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
+        <Link
+          to="/documents"
+          className="imline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+        >
           <ArrowLeft size={16} />
           Back to Documents
         </Link>
@@ -128,7 +134,7 @@ const DocumentDetailPage = () => {
       <PageHeader title={document.data.title} />
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
     </div>
-  )
-}
+  );
+};
 
 export default DocumentDetailPage;
