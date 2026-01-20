@@ -39,7 +39,7 @@ const LoginPage = () => {
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px] opacity-30" />
 
       <div className="relative w-full max-w-md px-6">
-        <div className="bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-3xl shadow-xl shadow-slate-200/50 p-10">
+        <div className="bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-xl shadow-xl shadow-slate-200/50 p-10">
           {/* Header */}
           <div className="text-center mb-10">
             <div className="inline-flex justify-center w-14 h-14 rounded-2xl bg-linear-to-br from-emerald-400 to-teal-500 shadow-lg shadow-emerald-500/25 mb-6">

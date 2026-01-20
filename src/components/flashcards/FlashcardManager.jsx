@@ -147,7 +147,10 @@ const FlashcardManager = ({ documentId }) => {
       <div className="space-y-8">
         {/* Back Button */}
         <button
-          onClick={() => setSelectedSet(null)}
+          onClick={() => {
+            setSelectedSet(null);
+            fetchFlashcardSets();
+          }}
           className="group inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors duration-200"
         >
           <ArrowLeft
@@ -318,6 +321,12 @@ const FlashcardManager = ({ documentId }) => {
                       {set.cards.length === 1 ? "card" : "cards"}
                     </span>
                   </div>
+                  <div className="px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-lg">
+                    <span className="text-sm font-semibold text-blue-700">
+                      {set.cards.filter((c) => c.ReviewCount > 0).length} /{" "}
+                      {set.cards.length} Reviewed
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -329,7 +338,7 @@ const FlashcardManager = ({ documentId }) => {
 
   return (
     <>
-      <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-3xl shadow-xl shadow-slate-200/50 p-8">
+      <div className="bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-xl shadow-xl shadow-slate-200/50 p-8">
         {selectedSet ? renderFlashcardViewer() : renderSetList()}
       </div>
 

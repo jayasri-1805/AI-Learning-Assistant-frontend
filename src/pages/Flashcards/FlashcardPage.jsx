@@ -20,7 +20,6 @@ import Modal from "../../components/common/Modal";
 import Flashcard from "../../components/flashcards/Flashcard";
 
 const FlashcardPage = () => {
-
   const { id: documentId } = useParams();
   const [flashcardSets, setFlashcardSets] = useState([]);
   const [flashcards, setFlashcards] = useState([]);
@@ -33,9 +32,8 @@ const FlashcardPage = () => {
   const fetchFlashcards = async () => {
     setLoading(true);
     try {
-      const response = await flashcardService.getFlashcardsForDocument(
-        documentId
-      );
+      const response =
+        await flashcardService.getFlashcardsForDocument(documentId);
       setFlashcardSets(response.data[0]);
       setFlashcards(response.data[0]?.cards || []);
     } catch (error) {
@@ -71,7 +69,7 @@ const FlashcardPage = () => {
   const handlePrevCard = () => {
     handleReview(currentCardIndex);
     setCurrentCardIndex(
-      (prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length
+      (prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length,
     );
   };
 
@@ -93,8 +91,8 @@ const FlashcardPage = () => {
       await flashcardService.toggleStar(cardId);
       setFlashcards((prevFlashcards) =>
         prevFlashcards.map((card) =>
-          card._id === cardId ? { ...card, isStarred: !card.isStarred } : card
-        )
+          card._id === cardId ? { ...card, isStarred: !card.isStarred } : card,
+        ),
       );
       toast.success("Flashcard starred status updated!");
     } catch (error) {
@@ -164,17 +162,17 @@ const FlashcardPage = () => {
     <div>
       <div className="mb-4">
         <Link
-          to={`/documents/${documentId}`}
+          to={`/flashcards`}
           className="inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
         >
           <ArrowLeft size={16} />
-          Back to Document
+          Back to All Flashcards
         </Link>
       </div>
       <PageHeader title="Flashcards">
         <div className="flex gap-2">
-          {!loading && (
-            flashcards.length > 0 ? (
+          {!loading &&
+            (flashcards.length > 0 ? (
               <>
                 <Button
                   onClick={() => setIsDeleteModalOpen(true)}
@@ -230,6 +228,6 @@ const FlashcardPage = () => {
       </Modal>
     </div>
   );
-}
+};
 
-export default FlashcardPage
+export default FlashcardPage;
