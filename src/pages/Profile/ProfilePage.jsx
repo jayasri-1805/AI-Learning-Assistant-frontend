@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { User, Mail, Lock } from "lucide-react";
 
 const ProfilePage = () => {
-
   const [loading, setLoading] = useState(true);
   const [passwordLoading, setPasswordLoading] = useState(false);
 
@@ -21,7 +20,8 @@ const ProfilePage = () => {
     const fetchProfile = async () => {
       try {
         const { data } = await authService.getProfile();
-        setUsername(data.username);
+        console.log(data);
+        setUsername(data.name);
         setEmail(data.email);
       } catch (error) {
         toast.error("Failed to fetch profile data.");
@@ -57,8 +57,7 @@ const ProfilePage = () => {
     }
   };
 
-  if (loading)
-    return <Spinner />;
+  if (loading) return <Spinner />;
 
   return (
     <div>
@@ -166,7 +165,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;
