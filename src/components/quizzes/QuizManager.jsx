@@ -15,7 +15,7 @@ const QuizManager = ({ documentId }) => {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [isGenerateModalOpen, setIsGenerateModalOpen] = useState(false);
-  const [numQuestions, setNumQuestions] = useState(5);
+  const [numQuestions, setNumQuestions] = useState(5); // Default to 5
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -46,7 +46,10 @@ const QuizManager = ({ documentId }) => {
     e.preventDefault();
     setGenerating(true);
     try {
-      await aiService.generateQuiz(documentId, { numQuestions });
+      // Pass as object to match aiService expectations
+      await aiService.generateQuiz(documentId, {
+        numberOfQuestions: numQuestions,
+      });
       toast.success("Quiz generated successfully!");
       setIsGenerateModalOpen(false);
       fetchQuizzes();
