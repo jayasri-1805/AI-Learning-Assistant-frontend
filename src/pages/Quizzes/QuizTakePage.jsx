@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
-import quizService from '../../services/quizService';
-import PageHeader from '../../components/common/PageHeader';
-import Spinner from '../../components/common/Spinner';
-import toast from 'react-hot-toast';
-import Button from '../../components/common/Button';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import quizService from "../../services/quizService";
+import PageHeader from "../../components/common/PageHeader";
+import Spinner from "../../components/common/Spinner";
+import toast from "react-hot-toast";
+import Button from "../../components/common/Button";
 
 const QuizTakePage = () => {
-
   const { quizId } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
@@ -21,9 +20,11 @@ const QuizTakePage = () => {
     const fetchQuiz = async () => {
       try {
         const response = await quizService.getQuizById(quizId);
+        console.log("Quiz ID:", quizId);
+        console.log("Quiz Data:", response.data);
         setQuiz(response.data);
       } catch (error) {
-        toast.error('Failed to fetch quiz.');
+        toast.error("Failed to fetch quiz.");
         console.error(error);
       } finally {
         setLoading(false);
@@ -55,19 +56,23 @@ const QuizTakePage = () => {
   const handleSubmitQuiz = async () => {
     setSubmitting(true);
     try {
-      const formattedAnswers = Object.keys(selectedAnswers).map(questionId => {
-        const question = quiz.questions.find(q => q._id === questionId);
-        const questionIndex = quiz.questions.findIndex(q => q._id === questionId);
-        const optionIndex = selectedAnswers[questionId];
-        const selectedAnswer = question.options[optionIndex];
-        return { questionIndex, selectedAnswer };
-      });
+      const formattedAnswers = Object.keys(selectedAnswers).map(
+        (questionId) => {
+          const question = quiz.questions.find((q) => q._id === questionId);
+          const questionIndex = quiz.questions.findIndex(
+            (q) => q._id === questionId,
+          );
+          const optionIndex = selectedAnswers[questionId];
+          const selectedAnswer = question.options[optionIndex];
+          return { questionIndex, selectedAnswer };
+        },
+      );
 
       await quizService.submitQuiz(quizId, formattedAnswers);
-      toast.success('Quiz submitted successfully!');
+      toast.success("Quiz submitted successfully!");
       navigate(`/quizzes/${quizId}/results`);
     } catch (error) {
-      toast.error(error.message || 'Failed to submit quiz.');
+      toast.error(error.message || "Failed to submit quiz.");
     } finally {
       setSubmitting(false);
     }
@@ -81,11 +86,13 @@ const QuizTakePage = () => {
     );
   }
 
-  if (!quiz || quiz.questions.length === 0) {
+  if (!quiz || !quiz.questions || quiz.questions.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <p className="text-slate-600 text-lg">Quiz not found or has no questions.</p>
+          <p className="text-slate-600 text-lg">
+            Quiz not found or has no questions.
+          </p>
         </div>
       </div>
     );
@@ -97,7 +104,7 @@ const QuizTakePage = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <PageHeader title={quiz.title || 'Take Quiz'} />
+      <PageHeader title={quiz.title || "Take Quiz"} />
 
       {/* Progress Bar */}
       <div className="mb-6">
@@ -112,7 +119,9 @@ const QuizTakePage = () => {
         <div className="relative h-2 bg-slate-100 rounded-full overflow-hidden">
           <div
             className="absolute inset-y-0 left-0 bg-linear-to-br from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${((currentQuestionIndex + 1) / quiz.questions.length) * 100}%` }}
+            style={{
+              width: `${((currentQuestionIndex + 1) / quiz.questions.length) * 100}%`,
+            }}
           />
         </div>
       </div>
@@ -137,25 +146,31 @@ const QuizTakePage = () => {
             return (
               <label
                 key={index}
-                className={`group relative flex items-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${isSelected
-                    ? 'border-emerald-500 bg-emerald-50 shadow-lg shadow-emerald-500/10'
-                    : 'border-slate-200 bg-slate-50/50 hover:border-slate-300 hover:bg-white hover:shadow-md'
-                  }`}
+                className={`group relative flex items-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
+                  isSelected
+                    ? "border-emerald-500 bg-emerald-50 shadow-lg shadow-emerald-500/10"
+                    : "border-slate-200 bg-slate-50/50 hover:border-slate-300 hover:bg-white hover:shadow-md"
+                }`}
               >
                 <input
                   type="radio"
                   name={`question-${currentQuestion._id}`}
                   value={index}
                   checked={isSelected}
-                  onChange={() => handleOptionChange(currentQuestion._id, index)}
+                  onChange={() =>
+                    handleOptionChange(currentQuestion._id, index)
+                  }
                   className="sr-only"
                 />
 
                 {/* Custom Radio Button */}
-                <div className={`shrink-0 w-5 h-5 rounded-full border-2 transition-all duration-200${isSelected
-                    ? 'border-emerald-500 bg-emerald-500'
-                    : 'border-slate-300 bg-white group-hover:border-emerald-400'
-                  }`}>
+                <div
+                  className={`shrink-0 w-5 h-5 rounded-full border-2 transition-all duration-200${
+                    isSelected
+                      ? "border-emerald-500 bg-emerald-500"
+                      : "border-slate-300 bg-white group-hover:border-emerald-400"
+                  }`}
+                >
                   {isSelected && (
                     <div className="w-full h-full flex items-center justify-center">
                       <div className="w-2 h-2 bg-white rounded-full" />
@@ -164,8 +179,13 @@ const QuizTakePage = () => {
                 </div>
 
                 {/* Option Text */}
-                <span className={`ml-4 text-sm font-medium transition-colors duration-200 ${isSelected ? 'text-emerald-900' : 'text-slate-700 group-hover:text-slate-900'
-                  }`}>
+                <span
+                  className={`ml-4 text-sm font-medium transition-colors duration-200 ${
+                    isSelected
+                      ? "text-emerald-900"
+                      : "text-slate-700 group-hover:text-slate-900"
+                  }`}
+                >
                   {option}
                 </span>
 
@@ -189,7 +209,10 @@ const QuizTakePage = () => {
           disabled={currentQuestionIndex === 0 || submitting}
           variant="secondary"
         >
-          <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" strokeWidth={2.5} />
+          <ChevronLeft
+            className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200"
+            strokeWidth={2.5}
+          />
           Previous
         </Button>
 
@@ -215,12 +238,12 @@ const QuizTakePage = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
           </button>
         ) : (
-          <Button
-            onClick={handleNextQuestion}
-            disabled={submitting}
-          >
+          <Button onClick={handleNextQuestion} disabled={submitting}>
             Next
-            <ChevronRight className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" strokeWidth={2.5} />
+            <ChevronRight
+              className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200"
+              strokeWidth={2.5}
+            />
           </Button>
         )}
       </div>
@@ -228,7 +251,9 @@ const QuizTakePage = () => {
       {/* Question Navigation Dots */}
       <div className="mt-0 flex items-center justify-center gap-2 flex-wrap">
         {quiz.questions.map((_, index) => {
-          const isAnsweredQuestion = selectedAnswers.hasOwnProperty(quiz.questions[index]._id);
+          const isAnsweredQuestion = selectedAnswers.hasOwnProperty(
+            quiz.questions[index]._id,
+          );
           const isCurrent = index === currentQuestionIndex;
 
           return (
@@ -236,12 +261,13 @@ const QuizTakePage = () => {
               key={index}
               onClick={() => setCurrentQuestionIndex(index)}
               disabled={submitting}
-              className={`w-8 h-8 rounded-lg font-semibold text-xs transition-all duration-200 ${isCurrent
-                  ? 'bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 scale-100'
+              className={`w-8 h-8 rounded-lg font-semibold text-xs transition-all duration-200 ${
+                isCurrent
+                  ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 scale-100"
                   : isAnsweredQuestion
-                    ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+              } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               {index + 1}
             </button>
@@ -249,7 +275,7 @@ const QuizTakePage = () => {
         })}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default QuizTakePage
+export default QuizTakePage;
