@@ -1,18 +1,22 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
-  --font-display: "Urbanist", sans-serif;
+  --font-display: "Poppins", sans-serif;
   --breakpoint-3xl: 1920px;
-  --color-primary: #FF9324;
+  --color-primary: #ff9324;
 }
 
 @layer base {
-  html {
+  html,
+  body {
     font-family: var(--font-display);
   }
 
   body {
     background-color: #fcfbfc;
   }
+}
+
+* {
+  font-family: "Poppins", sans-serif !important;
 }

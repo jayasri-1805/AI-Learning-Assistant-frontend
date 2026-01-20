@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import Spinner from '../../components/common/Spinner';
-import progressService from '../../services/progressService';
-import toast from 'react-hot-toast';
-import { FileText, BookOpen, BrainCircuit, TrendingUp, Clock } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import Spinner from "../../components/common/Spinner";
+import progressService from "../../services/progressService";
+import toast from "react-hot-toast";
+import {
+  FileText,
+  BookOpen,
+  BrainCircuit,
+  TrendingUp,
+  Clock,
+} from "lucide-react";
 
 const DashboardPage = () => {
-
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +22,7 @@ const DashboardPage = () => {
 
         setDashboardData(data.data);
       } catch (error) {
-        toast.error('Failed to fetch dashboard data.');
+        toast.error("Failed to fetch dashboard data.");
         console.error(error);
       } finally {
         setLoading(false);
@@ -45,26 +50,26 @@ const DashboardPage = () => {
 
   const stats = [
     {
-      label: 'Total Documents',
+      label: "Total Documents",
       value: dashboardData.overview.totalDocuments,
       icon: FileText,
-      gradient: 'from-blue-400 to-cyan-500',
-      shadowColor: 'shadow-blue-500/25'
+      gradient: "from-blue-400 to-cyan-500",
+      shadowColor: "shadow-blue-500/25",
     },
     {
-      label: 'Total Flashcards',
+      label: "Total Flashcards",
       value: dashboardData.overview.totalFlashcards,
       icon: BookOpen,
-      gradient: 'from-purple-400 to-pink-500',
-      shadowColor: 'shadow-purple-500/25'
+      gradient: "from-purple-400 to-pink-500",
+      shadowColor: "shadow-purple-500/25",
     },
     {
-      label: 'Total Quizzes',
+      label: "Total Quizzes",
       value: dashboardData.overview.totalQuizzes,
       icon: BrainCircuit,
-      gradient: 'from-emerald-400 to-teal-500',
-      shadowColor: 'shadow-emerald-500/25'
-    }
+      gradient: "from-emerald-400 to-teal-500",
+      shadowColor: "shadow-emerald-500/25",
+    },
   ];
 
   return (
@@ -93,7 +98,9 @@ const DashboardPage = () => {
                 <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                   {stat.label}
                 </span>
-                <div className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                <div
+                  className={`w-11 h-11 rounded-xl bg-linear-to-br ${stat.gradient} shadow-lg ${stat.shadowColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                >
                   <stat.icon className="w-5 h-5 text-white" strokeWidth={2} />
                 </div>
               </div>
@@ -115,23 +122,27 @@ const DashboardPage = () => {
             </h3>
           </div>
 
-          {dashboardData.recentActivity && ((dashboardData.recentActivity.documents.length > 0) || (dashboardData.recentActivity.quizzes.length > 0)) ? (
+          {dashboardData.recentActivity &&
+          (dashboardData.recentActivity.documents.length > 0 ||
+            dashboardData.recentActivity.quizzes.length > 0) ? (
             <div className="space-y-3">
               {[
-                ...(dashboardData.recentActivity.documents || []).map(doc => ({
-                  id: doc._id,
-                  description: doc.title,
-                  timestamp: doc.lastAccessed,
-                  link: `/documents/${doc._id}`,
-                  type: 'Document',
-                })),
-                ...(dashboardData.recentActivity.quizzes || []).map(quiz => ({
+                ...(dashboardData.recentActivity.documents || []).map(
+                  (doc) => ({
+                    id: doc._id,
+                    description: doc.title,
+                    timestamp: doc.lastAccessed,
+                    link: `/documents/${doc._id}`,
+                    type: "Document",
+                  }),
+                ),
+                ...(dashboardData.recentActivity.quizzes || []).map((quiz) => ({
                   id: quiz._id,
                   description: quiz.title,
                   timestamp: quiz.lastAccessed,
                   link: `/quizzes/${quiz._id}`,
-                  type: 'Quiz',
-                }))
+                  type: "Quiz",
+                })),
               ]
                 .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
                 .map((activity, index) => (
@@ -141,13 +152,20 @@ const DashboardPage = () => {
                   >
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-2 h-2 rounded-full ${activity.type === 'document'
-                            ? 'bg-linear-to-r from-blue-400 to-cyan-500'
-                            : 'bg-linear-to-r from-emerald-400 to-teal-500'
-                          }`} />
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            activity.type === "document"
+                              ? "bg-linear-to-r from-blue-400 to-cyan-500"
+                              : "bg-linear-to-r from-emerald-400 to-teal-500"
+                          }`}
+                        />
                         <p className="text-sm font-medium text-slate-900 truncate">
-                          {activity.type === 'document' ? 'Accessed Document: ' : 'Attempted Quiz:'}
-                          <span className="text-slate-700">{activity.description}</span>
+                          {activity.type === "document"
+                            ? "Accessed Document: "
+                            : "Attempted Quiz:"}
+                          <span className="text-slate-700">
+                            {activity.description}
+                          </span>
                         </p>
                       </div>
                       <p className="text-xs text-slate-500 pl-4">
@@ -171,12 +189,14 @@ const DashboardPage = () => {
                 <Clock className="w-8 h-8 text-slate-400" />
               </div>
               <p className="text-sm text-slate-600">No recent activity yet.</p>
-              <p className="text-xs text-slate-500 mt-1">Start lerning to see your progress here</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Start lerning to see your progress here
+              </p>
             </div>
           )}
         </div>
       </div>
     </div>
-  )
-}
-export default DashboardPage
+  );
+};
+export default DashboardPage;
