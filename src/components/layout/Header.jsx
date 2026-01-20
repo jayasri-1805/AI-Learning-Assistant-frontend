@@ -188,19 +188,19 @@ const Header = ({ toggleSidebar }) => {
             </button>
 
             {/* Help Button */}
-            <button className="hidden sm:inline-flex items-center justify-center w-10 h-10 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
+            {/* <button className="hidden sm:inline-flex items-center justify-center w-10 h-10 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200">
               <HelpCircle size={20} strokeWidth={2} />
-            </button>
+            </button> */}
 
             {/* Notifications */}
-            <button className="relative inline-flex items-center justify-center w-10 h-10 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all duration-200 group">
+            {/* <button className="relative inline-flex items-center justify-center w-10 h-10 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all duration-200 group">
               <Bell
                 size={20}
                 strokeWidth={2}
                 className="group-hover:rotate-12 transition-transform duration-300 origin-top"
               />
               <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white animate-pulse"></span>
-            </button>
+            </button> */}
 
             <div className="w-px h-8 bg-slate-200 mx-1 hidden sm:block"></div>
 
