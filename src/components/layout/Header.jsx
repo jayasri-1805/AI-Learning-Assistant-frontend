@@ -227,7 +227,7 @@ const Header = ({ toggleSidebar }) => {
 
                 <div className="text-left hidden lg:block">
                   <p className="text-sm font-semibold text-slate-900 leading-tight group-hover:text-emerald-700 transition-colors">
-                    {user?.name || "User"}
+                    Welcome, {user?.name || "User"}!
                   </p>
                   <p className="text-xs text-slate-500 font-medium group-hover:text-emerald-600/70 transition-colors">
                     {user?.email || "user@gmail.com"}

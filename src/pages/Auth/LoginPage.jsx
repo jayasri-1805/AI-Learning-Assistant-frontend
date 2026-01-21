@@ -42,7 +42,7 @@ const LoginPage = () => {
         <div className="bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-xl shadow-xl shadow-slate-200/50 p-10">
           {/* Header */}
           <div className="text-center mb-10">
-            <div className="inline-flex justify-center w-14 h-14 rounded-2xl bg-linear-to-br from-emerald-400 to-teal-500 shadow-lg shadow-emerald-500/25 mb-6">
+            <div className="inline-flex justify-center w-14 h-14 p-3 rounded-2xl bg-linear-to-br from-emerald-400 to-teal-500 shadow-lg shadow-emerald-500/25 mb-6">
               <BrainCircuit className="w-7 h-7 text-white" strokeWidth={2} />
             </div>
             <h1 className="text-2xl font-medium text-slate-900 mb-2">
