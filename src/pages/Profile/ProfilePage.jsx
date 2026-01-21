@@ -61,7 +61,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <PageHeader title="Profile Settings" />
+      <PageHeader title="Profile Settings" subtitle="Manage your profile" />
 
       <div className="space-y-8">
         {/* User Information Display */}

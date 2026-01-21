@@ -7,7 +7,6 @@ import Spinner from "../../components/common/Spinner";
 import Button from "../../components/common/Button";
 import DocumentCard from "../../components/documents/DocumentCard";
 
-
 const DocumentListPage = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -122,7 +121,7 @@ const DocumentListPage = () => {
             </p>
             <button
               onClick={() => setIsUploadModalOpen(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]"
+              className="inline-flex cursor-pointer items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]"
             >
               <Plus className="w-4 h-4" strokeWidth={2.5} />
               Upload Document
@@ -154,15 +153,18 @@ const DocumentListPage = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <div>
-            <h1 className="text-2xl font-medium text-slate-900 tracking-tight mb-2">
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
               My Documents
             </h1>
-            <p className="text-slate-500 text-sm">
+            <p className="text-slate-500 font-medium mt-1">
               Manage and organize your learning materials
             </p>
           </div>
           {documents.length > 0 && (
-            <Button onClick={() => setIsUploadModalOpen(true)}>
+            <Button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="cursor-pointer"
+            >
               <Plus className="w-4 h-4" strokeWidth={2.5} />
               Upload Document
             </Button>
@@ -222,11 +224,8 @@ const DocumentListPage = () => {
                     accept=".pdf"
                   />
                   <div className="flex flex-col items-center justify-center py-10 px-6">
-                    <div className="w-14 h-14 bg-linear-to-br from-emerald-500 to-teal-500 items-center justify-center mb-4">
-                      <Upload
-                        className="w-7 h-7 text-emerald-600"
-                        strokeWidth={2}
-                      />
+                    <div className="w-14 h-14 bg-linear-to-br rounded-2xl from-emerald-500 to-teal-500 items-center justify-center mb-4 p-3">
+                      <Upload className="w-7 h-7 text-white" strokeWidth={2} />
                     </div>
                     <p className="text-sm font-medium text-slate-700 mb-1">
                       {uploadFile ? (
@@ -253,14 +252,14 @@ const DocumentListPage = () => {
                   type="button"
                   onClick={() => setIsUploadModalOpen(false)}
                   disabled={uploading}
-                  className="flex-1 h-11 px-4 border-2 border-slate-200 rounded-xl bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 cursor-pointer h-11 px-4 border-2 border-slate-200 rounded-xl bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="flex-1 h-11 px-4 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] "
+                  className="flex-1 cursor-pointer h-11 px-4 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] "
                 >
                   {uploading ? (
                     <span className="flex items-center gap-2">
@@ -337,6 +336,5 @@ const DocumentListPage = () => {
     </div>
   );
 };
-
 
 export default DocumentListPage;

@@ -125,7 +125,7 @@ const DocumentDetailPage = () => {
       <div className="mb-4">
         <Link
           to="/documents"
-          className="imline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
+          className="flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors"
         >
           <ArrowLeft size={16} />
           Back to Documents
